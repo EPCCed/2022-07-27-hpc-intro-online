@@ -54,9 +54,11 @@ issues.
 > could cause issues for other people. Think carefully about the potential
 > implications of issuing commands that may use large amounts of resource.
 >
-> Unsure? Ask your friendly systems administrator ("sysadmin") if the thing
-> you're contemplating is suitable for the login node, or if there's another
-> mechanism to get it done safely.
+> Unsure? Ask your friendly systems administrator ("sysadmin") or service
+> desk if the thing you're contemplating is suitable for the login node,
+> or if there's another mechanism to get it done safely.
+>
+> You can contact the ARCHER2 Service Desk at [support@archer2.ac.uk](mailto:support@archer2.ac.uk)
 {: .callout}
 
 You can always use the commands `top` and `ps ux` to list the processes that
