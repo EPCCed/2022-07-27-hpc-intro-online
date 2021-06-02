@@ -11,37 +11,37 @@
 > difference between the calculation time and the overall run time; the total core seconds is the
 > *calculation time* multiplied by the number of cores.
 > 
-> | Cores      | Overall run time (s) | Calculation time (s) | IO time (s) | Total core seconds |
-> |------------|----------------------|----------------------|-------------|--------------------|
-> | 1 (serial) |                      |                      |             |                    |
-> | 2          |                      |                      |             |                    |
-> | 4          |                      |                      |             |                    |                    
-> | 8          |                      |                      |             |                    | 
-> | 16         |                      |                      |             |                    | 
-> | 32         |                      |                      |             |                    | 
-> | 64         |                      |                      |             |                    |              
-> | 128        |                      |                      |             |                    | 
-> | 256        |                      |                      |             |                    |
+> | Cores      | Overall run time (s) | Calculation time (s) | IO time (s) | Calculation core seconds |
+> |------------|----------------------|----------------------|-------------|--------------------------|
+> | 1 (serial) |                      |                      |             |                          |
+> | 2          |                      |                      |             |                          |
+> | 4          |                      |                      |             |                          |                    
+> | 8          |                      |                      |             |                          | 
+> | 16         |                      |                      |             |                          | 
+> | 32         |                      |                      |             |                          | 
+> | 64         |                      |                      |             |                          |              
+> | 128        |                      |                      |             |                          | 
+> | 256        |                      |                      |             |                          |
 > 
 > Look at your results – do they make sense? Given the structure of the code, you would
 > expect the IO time to be roughly constant, and the performance of the calculation to increase
-> linearly with the number of cores: this would give a roughly constant figure for the total core
-> time. Is this what you observe?
+> linearly with the number of cores: this would give a roughly constant figure for the Calulation core
+> seconds. Is this what you observe?
 > > ## Solution
 > >
 > > The table below shows example timings for runs on {{ site.host_name }}
 > >
-> > | Cores      | Overall run time (s) | Calculation time (s) | IO time (s) | Total core seconds |
-> > |------------|----------------------|----------------------|-------------|--------------------|
-> > | 1 (serial) |                      |                      |             |                    |
-> > | 2          |                      |                      |             |                    |
-> > | 4          |                      |                      |             |                    |                    
-> > | 8          |                      |                      |             |                    | 
-> > | 16         |                      |                      |             |                    | 
-> > | 32         |                      |                      |             |                    | 
-> > | 64         |                      |                      |             |                    |              
-> > | 128        |                      |                      |             |                    | 
-> > | 256        |                      |                      |             |                    |
+> > | Cores      | Overall run time (s) | Calculation time (s) | IO time (s) |       Calculation core seconds |
+> > |------------|----------------------|----------------------|-------------|--------------------------------|
+> > |          1 |                3.188 |                2.890 |       0.298 |                          2.890 |
+> > |          2 |                1.697 |                1.432 |       0.265 |                          2.864 |
+> > |          4 |                1.068 |                0.716 |       0.352 |                          2.864 |
+> > |          8 |                0.717 |                0.372 |       0.345 |                          2.976 |
+> > |         16 |                0.516 |                0.181 |       0.335 |                          2.896 |
+> > |         32 |                0.393 |                0.093 |       0.300 |                          2.976 |
+> > |         64 |                0.412 |                0.053 |       0.359 |                          3.392 |
+> > |        128 |                0.317 |                0.030 |       0.287 |                          3.840 |
+> > |        256 |                0.312 |                0.018 |       0.294 |                          4.608 |
 > >
 > {: .solution}
 {: .challenge}

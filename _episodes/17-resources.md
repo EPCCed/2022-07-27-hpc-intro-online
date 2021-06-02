@@ -119,7 +119,7 @@ job was faster or not than a previous job (as you do not have to find the output
 to look up the performance) but the number is not as accurate as the performance recorded
 by the application itself and also includes static overheads from running the job
 (such as loading modules and startup time) that can skew the timings. To do this on
-use `{{ site.sched_hist }} {{ site.sched_flag_histdetail }}` with the job ID, e.g.:
+use `{{ site.sched.hist }} {{ site.sched.flag.histdetail }}` with the job ID, e.g.:
 
 ```
 {{ site.remote.prompt-work }} {{ site.sched.hist }} {{ site.sched.flag.histdetail }} 12345
