@@ -194,12 +194,14 @@ the ARCHER2 `short` QoS . When the course talks about setting the following opti
 ```
 --qos=standard --reservation={{ site.sched.reservation }}
 ```
+{: .language-bash}
 
 you should replace them with:
 
 ```
 --qos=short --reservation=shortqos
 ```
+{: .language-bash}
 
 Similarly, when you are writing job submission scripts, you should replace:
 
@@ -207,6 +209,7 @@ Similarly, when you are writing job submission scripts, you should replace:
 #SBATCH --qos=standard
 #SBATCH --reservation={{ site.sched.reservation }}
 ```
+{: .language-bash}
 
 with
 
@@ -214,3 +217,4 @@ with
 #SBATCH --qos=short
 #SBATCH --reservation=shortqos
 ```
+{: .language-bash}

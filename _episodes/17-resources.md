@@ -99,6 +99,7 @@ job for our baseline performance so that is where we will start
 > > Calculation time was 5.400482 seconds
 > > Overall run time was 5.496556 seconds
 > > ```
+> > {: .language-bash}
 > {: .solution}
 {: .challenge}
 
@@ -111,6 +112,7 @@ lines in the output that look something like:
 Calculation time was 5.579000 seconds
 Overall run time was 5.671895 seconds
 ```
+{: .language-bash}
 
 You can also get an estimate of the overall run time from the final job statistics. If
 we look at how long the finished job ran for, this will provide a quick way to see

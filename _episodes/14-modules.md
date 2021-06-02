@@ -107,14 +107,14 @@ Currently Loaded Modulefiles:
 To load a software module, use `module load`. Let's say we would like
 to use the NetCDF utility `ncdump`. 
 
-On login, `ncdump` is not availble. We can test this by using the `which`
+On login, `ncdump` is not available. We can test this by using the `which`
 command. `which` looks for programs the same way that Bash does,
 so we can use it to tell us where a particular piece of software is stored.
 
 ```
 {{ site.host_prompt }} which ncdump
 ```
-{: .bash}
+{: .language-bash}
 ```
 which: no ncdump in (/usr/local/maven/bin:/lus/cls01095/work/y07/shared/bolt/0.7/bin:/work/y07/shared/utils/bin:/opt/cray/pe/perftools/20.10.0/bin:/opt/cray/pe/papi/6.0.0.4/bin:/opt/cray/libfabric/1.11.0.0.233/bin:/opt/cray/pe/craype/2.7.2/bin:/opt/cray/pe/cce/10.0.4/cce-clang/x86_64/bin:/opt/cray/pe/cce/10.0.4/binutils/x86_64/x86_64-pc-linux-gnu/bin:/opt/cray/pe/cce/10.0.4/binutils/cross/x86_64-aarch64/aarch64-linux-gnu/../bin:/opt/cray/pe/cce/10.0.4/utils/x86_64/bin:/usr/local/Modules/bin:/usr/local/bin:/usr/bin:/bin:/opt/cray/pe/bin:/usr/lib/mit/bin)
 ```
@@ -125,7 +125,7 @@ We can find the `ncdump` command by using `module load`:
 ```
 {{ site.host_prompt }} module load cray-netcdf 
 ```
-{: .bash}
+{: .language-bash}
 ```
 /opt/cray/pe/netcdf/4.7.4.2/bin/ncdump
 ```
@@ -143,7 +143,7 @@ As with all environment variables we can print it out using `echo`.
 ```
 {{ site.host_prompt }} echo $PATH
 ```
-{: .bash}
+{: .language-bash}
 ```
 /opt/cray/pe/netcdf/4.7.4.2/bin:/opt/cray/pe/python/3.8.5.0/bin:/lus/cls01095/work/z19/z19/aturner/.local/bin:/lus/cls01095/work/y07/shared/bolt/0.7/bin:/work/y07/shared/utils/bin:/usr/local/maven/bin:/opt/cray/pe/perftools/20.10.0/bin:/opt/cray/pe/papi/6.0.0.4/bin:/opt/cray/libfabric/1.11.0.0.233/bin:/opt/cray/pe/craype/2.7.2/bin:/opt/cray/pe/cce/10.0.4/cce-clang/x86_64/bin:/opt/cray/pe/cce/10.0.4/binutils/x86_64/x86_64-pc-linux-gnu/bin:/opt/cray/pe/cce/10.0.4/binutils/cross/x86_64-aarch64/aarch64-linux-gnu/../bin:/opt/cray/pe/cce/10.0.4/utils/x86_64/bin:/usr/local/Modules/bin:/home/z19/z19/aturner/bin:/usr/local/bin:/usr/bin:/bin:/opt/cray/pe/bin:/usr/lib/mit/bin
 ```
@@ -158,13 +158,13 @@ ran the `module load` command, it added a directory to the beginning of our
 {{ site.host_prompt }} ls /opt/cray/pe/netcdf/4.7.4.2/bin
 
 ```
-{: .bash}
+{: .language-bash}
 ```
 nc-config  nccopy  ncdump  ncgen  ncgen3  ncxx4-config  nf-config
 ```
 {: .output}
 
-In summmary, `module load` will add software to your `$PATH`.
+In summary, `module load` will add software to your `$PATH`.
 `module load` may also load additional modules with software dependencies.
 
 To unload a module, use `module unload` with the relevant module name.
@@ -189,7 +189,7 @@ Let's examine the output of `module avail` more closely.
 ```
 {{ site.host_prompt }} module avail cray-netcdf
 ```
-{: .bash}
+{: .language-bash}
 ```
 --------------------------- /opt/cray/pe/modulefiles ---------------------------
 cray-netcdf-hdf5parallel/4.7.4.0           cray-netcdf/4.7.4.0           

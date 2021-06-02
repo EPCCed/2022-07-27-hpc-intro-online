@@ -238,8 +238,8 @@ later episode of this lesson.
 > ## Command line options or job script options?
 > All of the options we specify can be supplied on the command line (as we
 > do here for `--partition=standard`) or in the job script (as we have done
-> for the job name above). These are interchangable. It is often more convenient
-> to put the options in the job script as it avoids lots of typing at the commmand
+> for the job name above). These are interchangeable. It is often more convenient
+> to put the options in the job script as it avoids lots of typing at the command
 > line.
 {: .callout}
 
@@ -429,7 +429,7 @@ As for our other jobs, we launch using the `{{ site.sched.submit.name }}` comman
 ```
 {{ site.remote.prompt-work }} {{ site.sched.submit.name }} run-sharpen.slurm
 ```
-{: .bash}
+{: .language-bash}
 
 
 If your job runs correctly, you should see an output file called
@@ -438,7 +438,7 @@ If your job runs correctly, you should see an output file called
 ```
 {{ site.remote.prompt-work }} ls -l *.pgm
 ```
-{: .bash}
+{: .language-bash}
 ```
 {% include {{ site.snippets }}/scheduler/ls-pgm-output.snip %}
 ```

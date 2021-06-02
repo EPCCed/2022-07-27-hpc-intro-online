@@ -147,7 +147,7 @@ should not be underestimated and you should ensure you have planned for this
 early enough (ideally, before you even start using the system for your
 research).
 
-In all these cases, the helpdesk of the system you are using should be able to
+In all these cases, the service desk of the system you are using should be able to
 provide useful guidance on your options for data transfer for the volumes of
 data you will be using.
 
@@ -157,6 +157,11 @@ data you will be using.
 > system you are using and what implications this has for your work if you lose
 > your data on the system. Plan your backups of critical data and how you will
 > transfer data off the system throughout the project.
+>
+> On ARCHER2, the home file systems are backed up so you can restore data you 
+> deleted by mistake. A copy of the data on home file system is also kept off
+> site for disaster recovery purposes. The work file systems are not backed up
+> in any way.
 {: .callout}
 
 ## Transferring Data
