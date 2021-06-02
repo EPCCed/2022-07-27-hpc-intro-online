@@ -1,5 +1,5 @@
 ---
-title: "Why use a Cluster?"
+title: "Why use an HPC System?"
 teaching: 15
 exercises: 5
 questions:

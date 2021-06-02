@@ -1,0 +1,33 @@
+> ## Configuring parallel jobs
+>
+> You will see in the job output that information is displayed about
+> where each MPI process is running, in particular which node it is
+> on.
+> 
+> Modify the sharpen script that you run a total of 2 nodes and 16 processes;
+> but to use only 8 tasks on each of two nodes.
+> Check the output file to ensure that you understand the job
+> distribution.
+>
+> > ## Solution
+> >
+> > ```
+> > #!/bin/bash
+> > 
+> > #SBATCH --partition=standard
+> > #SBATCH --qos=standard
+> > #SBATCH --time=00:00:30
+> > 
+> > #SBATCH --nodes=2
+> > #SBATCH --ntasks-per-node=8
+> > 
+> > module load epcc-job-env
+> > module load training/sharpen/1.0
+> > 
+> > cp $SHARPEN_INPUT/fuzzy.pgm .
+> >
+> > srun --hint=nomultithread --distribution=block:block sharpen-mpi.x
+> > ```
+> {: .solution}
+>
+{: .challenge}

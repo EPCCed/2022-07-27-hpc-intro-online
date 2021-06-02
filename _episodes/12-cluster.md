@@ -198,7 +198,7 @@ or hard tasks that require a lot of computational resources.
 
 All interaction with the worker nodes is handled by a specialized piece of
 software called a scheduler (the scheduler used in this lesson is called
-{{ site.workshop.sched.name }}). We'll learn more about how to use the
+{{ site.sched.name }}). We'll learn more about how to use the
 scheduler to submit jobs next, but for now, it can also tell us more
 information about the worker nodes.
 
@@ -252,7 +252,8 @@ connect to a shared, remote fileserver or cluster of servers.
 > >
 > > There are several ways to do this. Most operating systems have a graphical
 > > system monitor, like the Windows Task Manager. More detailed information
-> > can be found on the command line:
+> > can sometimes be found on the command line. For example, some of the commands used on 
+> > a Linux system are:
 > >
 > > * Run system utilities
 > >   ```
@@ -276,7 +277,7 @@ connect to a shared, remote fileserver or cluster of servers.
 > {: .solution}
 {: .challenge}
 
-> ## Explore the Head Node
+> ## Explore the login node
 >
 > Now compare the resources of your computer with those of the head node.
 >
@@ -324,7 +325,7 @@ connect to a shared, remote fileserver or cluster of servers.
 
 {% include {{ site.snippets }}/cluster/specific-node-info.snip %}
 
-> ## Compare Your Computer, the Head Node and the Worker Node
+> ## Compare Your Computer, the login node and the compute node
 >
 > Compare your laptop's number of processors and memory with the numbers you
 > see on the cluster head node and worker node. Discuss the differences with

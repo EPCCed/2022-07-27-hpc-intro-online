@@ -71,11 +71,13 @@ you are using.
 To see available software modules, use `module avail`:
 
 ```
-{{ site.remote.prompt }} module avail
+{{ site.remote.prompt-work }} module avail
 ```
 {: .language-bash}
-
+```
 {% include {{ site.snippets }}/modules/available-modules.snip %}
+```
+{: .output}
 
 ### Listing Currently Loaded Modules
 
@@ -84,116 +86,163 @@ loaded in your environment. If you have no modules loaded, you will see a
 message telling you so
 
 ```
-{{ site.remote.prompt }} module list
+{{ site.remote.prompt-work }} module list
 ```
 {: .language-bash}
 
 ```
-No Modulefiles Currently Loaded.
+Currently Loaded Modulefiles:
+ 1) cpe-cray                          8) perftools-base/20.10.0(default)                                  
+ 2) cce/10.0.4(default)               9) xpmem/2.2.35-7.0.1.0_1.9__gd50fabf.shasta(default)               
+ 3) craype/2.7.2(default)            10) cray-mpich/8.0.16(default)                                       
+ 4) craype-x86-rome                  11) cray-libsci/20.10.1.2(default)                                   
+ 5) libfabric/1.11.0.0.233(default)  12) bolt/0.7                                                         
+ 6) craype-network-ofi               13) /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env  
+ 7) cray-dsmml/0.1.2(default)        14) /usr/local/share/epcc-module/epcc-module-loader  
 ```
 {: .output}
 
 ## Loading and Unloading Software
 
-To load a software module, use `module load`. In this example we will use
-Python 3.
+To load a software module, use `module load`. Let's say we would like
+to use the NetCDF utility `ncdump`. 
 
-Initially, Python 3 is not loaded. We can test this by using the `which`
-command. `which` looks for programs the same way that Bash does, so we can use
-it to tell us where a particular piece of software is stored.
+On login, `ncdump` is not availble. We can test this by using the `which`
+command. `which` looks for programs the same way that Bash does,
+so we can use it to tell us where a particular piece of software is stored.
 
 ```
-{{ site.remote.prompt }} which python3
+{{ site.host_prompt }} which ncdump
 ```
-{: .language-bash}
+{: .bash}
+```
+which: no ncdump in (/usr/local/maven/bin:/lus/cls01095/work/y07/shared/bolt/0.7/bin:/work/y07/shared/utils/bin:/opt/cray/pe/perftools/20.10.0/bin:/opt/cray/pe/papi/6.0.0.4/bin:/opt/cray/libfabric/1.11.0.0.233/bin:/opt/cray/pe/craype/2.7.2/bin:/opt/cray/pe/cce/10.0.4/cce-clang/x86_64/bin:/opt/cray/pe/cce/10.0.4/binutils/x86_64/x86_64-pc-linux-gnu/bin:/opt/cray/pe/cce/10.0.4/binutils/cross/x86_64-aarch64/aarch64-linux-gnu/../bin:/opt/cray/pe/cce/10.0.4/utils/x86_64/bin:/usr/local/Modules/bin:/usr/local/bin:/usr/bin:/bin:/opt/cray/pe/bin:/usr/lib/mit/bin)
+```
+{: .output}
 
-{% include {{ site.snippets }}/modules/missing-python.snip %}
+We can find the `ncdump` command by using `module load`:
 
-We can load the `python3` command with `module load`:
-
-{% include {{ site.snippets }}/modules/module-load-python.snip %}
-
-{% include {{ site.snippets }}/modules/python-executable-dir.snip %}
+```
+{{ site.host_prompt }} module load cray-netcdf 
+```
+{: .bash}
+```
+/opt/cray/pe/netcdf/4.7.4.2/bin/ncdump
+```
+{: .output}
 
 So, what just happened?
 
-To understand the output, first we need to understand the nature of the `$PATH`
-environment variable. `$PATH` is a special environment variable that controls
-where a UNIX system looks for software. Specifically `$PATH` is a list of
-directories (separated by `:`) that the OS searches through for a command
-before giving up and telling us it can't find it. As with all environment
-variables we can print it out using `echo`.
+To understand the output, first we need to understand the nature of the
+`$PATH` environment variable. `$PATH` is a special environment variable
+that controls where a UNIX system looks for software. Specifically,
+`$PATH` is a list of directories (separated by `:`) that the OS searches
+through for a command before giving up and telling us it can't find it.
+As with all environment variables we can print it out using `echo`.
 
 ```
-{{ site.remote.prompt }} echo $PATH
+{{ site.host_prompt }} echo $PATH
 ```
-{: .language-bash}
-
-{% include {{ site.snippets }}/modules/python-module-path.snip %}
+{: .bash}
+```
+/opt/cray/pe/netcdf/4.7.4.2/bin:/opt/cray/pe/python/3.8.5.0/bin:/lus/cls01095/work/z19/z19/aturner/.local/bin:/lus/cls01095/work/y07/shared/bolt/0.7/bin:/work/y07/shared/utils/bin:/usr/local/maven/bin:/opt/cray/pe/perftools/20.10.0/bin:/opt/cray/pe/papi/6.0.0.4/bin:/opt/cray/libfabric/1.11.0.0.233/bin:/opt/cray/pe/craype/2.7.2/bin:/opt/cray/pe/cce/10.0.4/cce-clang/x86_64/bin:/opt/cray/pe/cce/10.0.4/binutils/x86_64/x86_64-pc-linux-gnu/bin:/opt/cray/pe/cce/10.0.4/binutils/cross/x86_64-aarch64/aarch64-linux-gnu/../bin:/opt/cray/pe/cce/10.0.4/utils/x86_64/bin:/usr/local/Modules/bin:/home/z19/z19/aturner/bin:/usr/local/bin:/usr/bin:/bin:/opt/cray/pe/bin:/usr/lib/mit/bin
+```
+{: .output}
 
 You'll notice a similarity to the output of the `which` command. In this case,
 there's only one difference: the different directory at the beginning. When we
 ran the `module load` command, it added a directory to the beginning of our
 `$PATH`. Let's examine what's there:
 
-{% include {{ site.snippets }}/modules/python-ls-dir-command.snip %}
+```
+{{ site.host_prompt }} ls /opt/cray/pe/netcdf/4.7.4.2/bin
 
-{% include {{ site.snippets }}/modules/python-ls-dir-output.snip %}
+```
+{: .bash}
+```
+nc-config  nccopy  ncdump  ncgen  ncgen3  ncxx4-config  nf-config
+```
+{: .output}
 
-Taking this to its conclusion, `module load` will add software to your `$PATH`.
-It "loads" software. A special note on this - depending on which version of the
-`module` program that is installed at your site, `module load` will also load
-required software dependencies.
+In summmary, `module load` will add software to your `$PATH`.
+`module load` may also load additional modules with software dependencies.
 
-{% include {{ site.snippets }}/modules/software-dependencies.snip %}
+To unload a module, use `module unload` with the relevant module name.
 
-## Software Versioning
+> ## Unload!
+>
+> Confirm you can unload the `cray-netcdf` module and check what happens
+> to the `PATH` environment variable.
+{: .challenge}
 
-So far, we've learned how to load and unload software packages. This is very
-useful. However, we have not yet addressed the issue of software versioning. At
-some point or other, you will run into issues where only one particular version
-of some software will be suitable. Perhaps a key bugfix only happened in a
-certain version, or version X broke compatibility with a file format you use.
-In either of these example cases, it helps to be very specific about what
-software is loaded.
+
+## Software versioning
+
+So far, we've learned how to load and unload software packages. This is very useful. However, we
+have not yet addressed the issue of software versioning. At some point or other, you will run into
+issues where only one particular version of some software will be suitable. Perhaps a key bugfix
+only happened in a certain version, or version X broke compatibility with a file format you use. In
+either of these example cases, it helps to be very specific about what software is loaded.
 
 Let's examine the output of `module avail` more closely.
 
 ```
-{{ site.remote.prompt }} module avail
+{{ site.host_prompt }} module avail cray-netcdf
 ```
-{: .language-bash}
+{: .bash}
+```
+--------------------------- /opt/cray/pe/modulefiles ---------------------------
+cray-netcdf-hdf5parallel/4.7.4.0           cray-netcdf/4.7.4.0           
+cray-netcdf-hdf5parallel/4.7.4.2(default)  cray-netcdf/4.7.4.2(default)  
+```
+{: .output}
 
-{% include {{ site.snippets }}/modules/available-modules.snip %}
+Note that we have two different versions of `cray-netcdf` (and also two
+versions of something else `cray-netcdf-hdf5parallel` which match our
+search).
 
-{% include {{ site.snippets }}/modules/wrong-gcc-version.snip %}
+
+> ## Using `module swap`
+>
+> Load module `cray-netcdf` as before. Note that if we do not specifify
+> a particular version, we load a default version.
+>
+> If we wish to change versions, we can use
+> `module swap <old-module> <new-module>`. Try this to obtain
+> `cray-netcdf/4.7.4.0`. Check what has happened to the location of
+> the `ncdump` utility.
+{: .challenge}
 
 > ## Using Software Modules in Scripts
 >
-> Create a job that is able to run `python3 --version`. Remember, no software
-> is loaded by default! Running a job is just like logging on to the system
+> Create a job that is able to run `ncdump --version`. Running a job
+> is just like logging on to the system
 > (you should not assume a module loaded on the login node is loaded on a
 > compute node).
 >
 > > ## Solution
 > >
 > > ```
-> > {{ site.remote.prompt }} nano python-module.sh
-> > {{ site.remote.prompt }} cat python-module.sh
+> > {{ site.remote.prompt-work }} nano ncdump-module.sh
+> > {{ site.remote.prompt-work }} cat ncdump-module.sh
 > > ```
 > > {: .language-bash}
 > >
 > > ```
 > > {{ site.remote.bash_shebang }}
+> > {{ site.sched.comment }} --partition=standard
+> > {{ site.sched.comment }} --qos=standard
+> > {{ site.sched.comment }} --reservation={{ site.sched.reservation }}
 > >
-> > module load {{ site.remote.module_python3 }}
+> > module load epcc-job-env
+> > module load cray-netcdf
 > >
-> > python3 --version
+> > ncdump --version
 > > ```
 > > {: .output}
 > >
 > > ```
-> > {{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} python-module.sh
+> > {{ site.remote.prompt-work }} {{ site.sched.submit.name }} python-module.sh
 > > ```
 > > {: .language-bash}
 > {: .solution}

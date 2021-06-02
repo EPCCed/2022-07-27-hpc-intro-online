@@ -1,6 +1,6 @@
 ---
 title: "Working with the scheduler"
-teaching: 45
+teaching: 50
 exercises: 30
 questions:
 - "What is a scheduler and why are they used?"
@@ -36,63 +36,6 @@ why sometimes your job do not start instantly as in your laptop.
 {% include figure.html max-width="75%" caption=""
    file="/fig/restaurant_queue_manager.svg"
    alt="Compare a job scheduler to a waiter in a restaurant" %}
-
-> ## Job Scheduling Roleplay (Optional)
->
-> Your instructor will divide you into groups taking on different roles in the
-> cluster (users, compute nodes and the scheduler). Follow their instructions
-> as they lead you through this exercise. You will be emulating how a job
-> scheduling system works on the cluster.
->
-> > ## Instructions
-> >
-> > To do this exercise, you will need about 50-100 pieces of paper or sticky
-> > notes.
-> >
-> > 1. Divide the room into groups, with specific roles.
-> >    * Pick three or four people to be the "scheduler."
-> >    * Select one-third of the room be "users", given several slips of paper
-> >      (or post-it notes) and pens.
-> >    * Have the remaining two thirds of the room be "compute nodes."
-> >    * Have the "users" go to the front of the room (or the back, wherever
-> >      there's space for them to stand) and the "schedulers" stand between
-> >      the users and "compute nodes" (who should remain at their seats).
-> >
-> > 1. Divide the pieces of paper / sticky notes among the "users" and have
-> >    them fill out all the pages with simple math problems and their name.
-> >    Tell everyone that these are the jobs that need to be done and
-> >    correspond to their computing research problems.
-> >
-> > 1. Point out that we now have jobs and we have "compute nodes" (the people
-> >    still sitting down) that can solve these problems. How are the jobs
-> >    going to get to the nodes? The answer is the scheduling program that
-> >    will take the jobs from the users and deliver them to open compute
-> >    nodes.
-> >
-> > 1. Have all the "compute nodes" raise their hands. Have the users "submit"
-> >    their jobs by handing them to the schedulers. Schedulers should then
-> >    deliver them to "open" (hands-raised) compute nodes and collect finished
-> >    problems and return them to the appropriate user.
-> >
-> > 1. Wait until most of the problems are done and then re-seat everyone.
-> >
-> > > ## Discussion
-> > >
-> > > A "node" might be unable to solve the assigned problem for a variety of
-> > > reasons.
-> > >
-> > > * Ran out of time.
-> > > * Ran out of memory.
-> > > * Ran out of storage space, or could not load an input file or dataset.
-> > > * Doesn't know where to start: nobody "taught" it, i.e., the program
-> > >   can't be loaded.
-> > > * Gets stuck on a hard part: the program has the wrong algorithm, or was
-> > >   never told to load the library containing the right algorithm.
-> > > * Was busy thinking about something else, and didn't get to the problem
-> > >   yet.
-> > {: .discussion}
-> {: .challenge}
-{: .callout}
 
 The scheduler used in this lesson is {{ site.sched.name }}. Although
 {{ site.sched.name }} is not used everywhere, running jobs is quite similar
@@ -147,24 +90,45 @@ hostname
 
 If you completed the previous challenge successfully, you probably realise that
 there is a distinction between running the job through the scheduler and just
-"running it". To submit this job to the scheduler, we use the `{{
-site.sched.submit.name }}` command.
+"running it". To submit this job to the scheduler, we use the
+`{{site.sched.submit.name }}` command.
 
 ```
 {{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
 ```
 {: .language-bash}
+```
+sbatch: Warning: Your job has no time specification (--time=) and the default time is short. You can cancel your job with 'scancel <JOB_ID>' if you wish to resubmit.
+sbatch: Warning: It appears your working directory may be on the home filesystem. It is /home2/home/ta028/ta028/userid. This is not available from the compute nodes - please check that this is what you intended. You can cancel your job with 'scancel <JOBID>' if you wish to resubmit.
+Submitted batch job 286949
+```
+{: .output}
 
+Ah! What went wrong here? Slurm is telling us that the file system we are currently on, `/home`, is not available
+on the compute nodes and that we are getting the default, short runtime. We will deal with the runtime 
+later, but we need to move to a different file system to submit the job and have it visible to the 
+compute nodes. On ARCHER2, this is the `/work` file system. The path is similar to home but with 
+`/work` at the start. Lets move there now, copy our job script across and resubmit:
+
+```
+{{ site.remote.prompt }} cd /work/ta028/ta028/userid
+{{ site.remote.prompt-work }} cp ~/example-job.sh .
+{{ site.remote.prompt-work }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
+```
+{: .language-bash}
+```
 {% include {{ site.snippets }}/scheduler/basic-job-script.snip %}
+```
+{: .output}
 
-And that's all we need to do to submit a job. Our work is done &mdash; now the
+That's better! And that's all we need to do to submit a job. Our work is done &mdash; now the
 scheduler takes over and tries to run the job for us. While the job is waiting
 to run, it goes into a list of jobs called the *queue*. To check on our job's
 status, we check the queue using the command
 `{{ site.sched.status }} {{ site.sched.flag.user }}`.
 
 ```
-{{ site.remote.prompt }} {{ site.sched.status }} {{ site.sched.flag.user }}
+{{ site.remote.prompt-work }} {{ site.sched.status }} {{ site.sched.flag.user }}
 ```
 {: .language-bash}
 
@@ -179,8 +143,8 @@ interval to a more reasonable value, for example 15 seconds, with the `-n 15`
 parameter. Let's try using it to monitor another job.
 
 ```
-{{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
-{{ site.remote.prompt }} watch -n 15 {{ site.sched.status }} {{ site.sched.flag.user }}
+{{ site.remote.prompt-work }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
+{{ site.remote.prompt-work }} watch -n 15 {{ site.sched.status }} {{ site.sched.flag.user }}
 ```
 {: .language-bash}
 
@@ -193,13 +157,13 @@ it will disappear from the queue. Press `Ctrl-c` when you want to stop the
 > On the login node, this script printed output to the terminal &mdash; but
 > when we exit `watch`, there's nothing. Where'd it go?
 >
-> Cluster job output is typically redirected to a file in the directory you
+> HPC job output is typically redirected to a file in the directory you
 > launched it from. Use `ls` to find and read the file.
 {: .discussion}
 
 ## Customising a Job
 
-The job we just ran used all of the scheduler's default options. In a
+The job we just ran used some of the scheduler's default options. In a
 real-world scenario, that's probably not what we want. The default options
 represent a reasonable minimum. Chances are, we will need more cores, more
 memory, more time, among other special considerations. To get access to these
@@ -220,7 +184,7 @@ script, but the `{{ site.sched.flag.name }}` option can be used to change the
 name of a job. Add an option to the script:
 
 ```
-{{ site.remote.prompt }} cat example-job.sh
+{{ site.remote.prompt-work }} cat example-job.sh
 ```
 {: .language-bash}
 
@@ -237,36 +201,16 @@ echo "This script has finished successfully."
 Submit the job and monitor its status:
 
 ```
-{{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
-{{ site.remote.prompt }} {{ site.sched.status }} {{ site.sched.flag.user }}
+{{ site.remote.prompt-work }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
+{{ site.remote.prompt-work }} {{ site.sched.status }} {{ site.sched.flag.user }}
 ```
 {: .language-bash}
-
+```
 {% include {{ site.snippets }}/scheduler/job-with-name-status.snip %}
+```
+{: .output}
 
 Fantastic, we've successfully changed the name of our job!
-
-> ## Setting up Email Notifications
->
-> Jobs on an HPC system might run for days or even weeks. We probably have
-> better things to do than constantly check on the status of our job with
-> `{{ site.sched.status }}`. Looking at the manual page for
-> `{{ site.sched.submit.name }}`, can you set up our test job to send you an email
-> when it finishes?
->
-> > ## Hint
-> >
-> > You can use the *manual pages* for {{ site.sched.name }} utilities to find
-> > more about their capabilities. On the command line, these are accessed
-> > through the `man` utility: run `man <program-name>`. You can find the same
-> > information online by searching > "man <program-name>".
-> >
-> > ```
-> > {{ site.remote.prompt }} man {{ site.sched.submit.name }}
-> > ```
-> > {: .language-bash}
-> {: .solution}
-{: .challenge}
 
 ### Resource Requests
 
@@ -291,21 +235,33 @@ It's best if your requests accurately reflect your job's requirements. We'll
 talk more about how to make sure that you're using resources effectively in a
 later episode of this lesson.
 
+> ## Command line options or job script options?
+> All of the options we specify can be supplied on the command line (as we
+> do here for `--partition=standard`) or in the job script (as we have done
+> for the job name above). These are interchangable. It is often more convenient
+> to put the options in the job script as it avoids lots of typing at the commmand
+> line.
+{: .callout}
+
 > ## Submitting Resource Requests
 >
 > Modify our `hostname` script so that it runs for a minute, then submit a job
-> for it on the cluster.
+> for it on the cluster. You should also move all the options we have been specifying
+> on the command line (e.g. `--partition`) into the script at this point.
 >
 > > ## Solution
 > >
 > > ```
-> > {{ site.remote.prompt }} cat example-job.sh
+> > {{ site.remote.prompt-work }} cat example-job.sh
 > > ```
 > > {: .language-bash}
 > >
 > > ```
 > > {{ site.remote.bash_shebang }}
 > > {{ site.sched.comment }} {{ site.sched.flag.time }} 00:01:15
+> > {{ site.sched.comment }} --partition=standard
+> > {{ site.sched.comment }} --qos=standard
+> > {{ site.sched.comment }} --reservation={{ site.sched.reservation }}
 > >
 > > echo -n "This script is running on "
 > > sleep 60 # time in seconds
@@ -315,7 +271,7 @@ later episode of this lesson.
 > > {: .output}
 > >
 > > ```
-> > {{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
+> > {{ site.remote.prompt }} {{ site.sched.submit.name }} example-job.sh
 > > ```
 > > {: .language-bash}
 > >
@@ -330,7 +286,7 @@ killed. Let's use walltime as an example. We will request 30 seconds of
 walltime, and attempt to run a job for two minutes.
 
 ```
-{{ site.remote.prompt }} cat example-job.sh
+{{ site.remote.prompt-work }} cat example-job.sh
 ```
 {: .language-bash}
 
@@ -338,6 +294,9 @@ walltime, and attempt to run a job for two minutes.
 {{ site.remote.bash_shebang }}
 {{ site.sched.comment }} {{ site.sched.flag.name }} long_job
 {{ site.sched.comment }} {{ site.sched.flag.time }} 00:00:30
+{{ site.sched.comment }} --partition=standard
+{{ site.sched.comment }} --qos=standard
+{{ site.sched.comment }} --reservation={{ site.sched.reservation }}
 
 echo "This script is running on ... "
 sleep 120 # time in seconds
@@ -350,14 +309,16 @@ Submit the job and wait for it to finish. Once it is has finished, check the
 log file.
 
 ```
-{{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
-{{ site.remote.prompt }} watch -n 15 {{ site.sched.status }} {{ site.sched.flag.user }}
+{{ site.remote.prompt-work }} {{ site.sched.submit.name }} example-job.sh
+{{ site.remote.prompt-work }} watch -n 15 {{ site.sched.status }} {{ site.sched.flag.user }}
 ```
 {: .language-bash}
 
+```
 {% include {{ site.snippets }}/scheduler/runtime-exceeded-job.snip %}
-
 {% include {{ site.snippets }}/scheduler/runtime-exceeded-output.snip %}
+```
+{: .output}
 
 Our job was killed for exceeding the amount of resources it requested. Although
 this appears harsh, this is actually a feature. Strict adherence to resource
@@ -370,6 +331,19 @@ jobs on the node will be unaffected. This means that one user cannot mess up
 the experience of others, the only jobs affected by a mistake in scheduling
 will be their own.
 
+> ## But how much does it cost?
+> Although your job will be killed if it exceeds the selected runtime,
+> a job that completes within the time limit is only charged for the
+> time it actually used. However, you should always try and specify a
+> wallclock limit that is close to (but greater than!) the expected
+> runtime as this will enable your job to be scheduled more
+> quickly.
+> If you say your job will run for an hour, the scheduler has
+> to wait until a full hour becomes free on the machine. If it only ever
+> runs for 5 minutes, you could have set a limit of 10 minutes and it
+> might have been run earlier in the gaps between other users' jobs.
+{: .callout}
+
 ## Cancelling a Job
 
 Sometimes we'll make a mistake and need to cancel a job. This can be done with
@@ -378,25 +352,30 @@ its job number (remember to change the walltime so that it runs long enough for
 you to cancel it before it is killed!).
 
 ```
-{{ site.remote.prompt }} {{ site.sched.submit.name }} {{ site.sched.submit.options }} example-job.sh
-{{ site.remote.prompt }} {{ site.sched.status }} {{ site.sched.flag.user }}
+{{ site.remote.prompt-work }} {{ site.sched.submit.name }} example-job.sh
+{{ site.remote.prompt-work }} {{ site.sched.status }} {{ site.sched.flag.user }}
 ```
 {: .language-bash}
 
+```
 {% include {{ site.snippets }}/scheduler/terminate-job-begin.snip %}
+```
+{: .output}
 
-Now cancel the job with its job number (printed in your terminal). A clean
-return of your command prompt indicates that the request to cancel the job was
-successful.
+Now cancel the job with its job number (printed in your terminal). Absence of any
+job info indicates that the job has been successfully cancelled.
 
 ```
-{{ site.remote.prompt }} {{site.sched.del }} 38759
+{{ site.remote.prompt-work }} {{site.sched.del }} 38759
 # It might take a minute for the job to disappear from the queue...
-{{ site.remote.prompt }} {{ site.sched.status }} {{ site.sched.flag.user }}
+{{ site.remote.prompt-work }} {{ site.sched.status }} {{ site.sched.flag.user }}
 ```
 {: .language-bash}
 
+```
 {% include {{ site.snippets }}/scheduler/terminate-job-cancel.snip %}
+```
+{: .output}
 
 {% include {{ site.snippets }}/scheduler/terminate-multiple-jobs.snip %}
 
@@ -413,5 +392,63 @@ genome index for alignment with a tool like
 run these types of tasks as a one-off with `{{ site.sched.interactive }}`.
 
 {% include {{ site.snippets }}/scheduler/using-nodes-interactively.snip %}
+
+## Running parallel jobs using MPI
+
+As we have already seen, the power of HPC systems comes from *parallelism*, i.e. having lots of
+processors/disks etc. connected together rather than having more powerful components than your
+laptop or workstation. Often, when running research programs on HPC you will need to run a
+program that has been built to use the MPI (Message Passing Interface) parallel library. The MPI
+library allows programs to exploit multiple processing cores in parallel to allow researchers
+to model or simulate faster on larger problem sizes. The details of how MPI work are not important
+for this course or even to use programs that have been built using MPI; however, MPI programs 
+typically have to be launched in job submission scripts in a different way to serial programs and
+users of parallel programs on HPC systems need to know how to do this. Specifically, launching
+parallel MPI programs typically requires four things:
+
+  - A special parallel launch program such as `mpirun`, `mpiexec`, `srun` or `aprun`.
+  - A specification of how many processes to use in parallel. For example, our parallel program
+    may use 256 processes in parallel.
+  - A specification of how many parallel processes to use per compute node. For example, if our
+    compute nodes each have 32 cores we often want to specify 32 parallel processes per node.
+  - The command and arguments for our parallel program.
+
+To illustrate this process, we will use a simple MPI parallel program that sharpens an image.
+(We will meet this example program in more detail in a later episode.) Here is a job submission
+script that runs the sharpen program across two compute nodes on the cluster. Create a file
+(e.g. called: `run-sharpen.slurm`) with the contents of this script in it.
+
+{% include {{ site.snippets }}/scheduler/parallel-script.snip %}
+
+The parallel launch line for the sharpen program can be seen towards the bottom of the script:
+
+{% include {{ site.snippets }}/scheduler/parallel-launch-desc.snip %}
+
+As for our other jobs, we launch using the `{{ site.sched.submit.name }}` command.
+
+```
+{{ site.remote.prompt-work }} {{ site.sched.submit.name }} run-sharpen.slurm
+```
+{: .bash}
+
+
+If your job runs correctly, you should see an output file called
+`sharpened.pgm`
+
+```
+{{ site.remote.prompt-work }} ls -l *.pgm
+```
+{: .bash}
+```
+{% include {{ site.snippets }}/scheduler/ls-pgm-output.snip %}
+```
+{: .output}
+
+If you only see `fuzzy.pgm` and not `sharpened.pgm` then look at
+the job log files to work out what went wrong.
+
+{% include {{ site.snippets }}/scheduler/parallel-challenge.snip %}
+
+{% include {{ site.snippets }}/scheduler/parallel-challenge2.snip %}
 
 {% include links.md %}

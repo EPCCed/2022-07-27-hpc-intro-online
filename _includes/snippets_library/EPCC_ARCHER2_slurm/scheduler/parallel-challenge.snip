@@ -1,0 +1,30 @@
+> ## Running parallel jobs
+>
+> Modify the sharpen script that you used above to use all 128 cores on
+> one node.  Check the output to confirm that it used the correct number
+> of cores in parallel for the calculation.
+> 
+> > ## Solution
+> >
+> > Here is a modified script
+> > 
+> > ```
+> > #!/bin/bash
+> > 
+> > #SBATCH --partition=standard
+> > #SBATCH --qos=standard
+> > #SABTCH --reservation={{ site.sched.reservation }}
+> > #SBATCH --time=00:00:30
+> > 
+> > #SBATCH --nodes=1
+> > #SBATCH --ntasks-per-node=128
+> > 
+> > module load epcc-job-env
+> > module load training/sharpen/1.0
+> > 
+> > cp $SHARPEN_INPUT/fuzzy.pgm .
+> > 
+> > srun --hint=nomultithread --distribution=block:block sharpen-mpi.x
+> > ```
+> {: .solution}
+{: .challenge}

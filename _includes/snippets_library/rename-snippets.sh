@@ -19,7 +19,7 @@ fi
 PREFIX=$1
 
 function rename_snip {
-    git mv $1 $2
+    mv $1 $2
 }
 
 ## Episode 12: Working on a remote HPC system
