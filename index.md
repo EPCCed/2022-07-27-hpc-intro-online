@@ -7,13 +7,13 @@ address:
 country: "UK"
 language: "English"
 latlng: 
-humandate: 3 June 2021
+humandate: 28 January 2022
 humantime: 09:30-16:00 BST
-startdate: 2021-06-03
-instructor: ["Andy Turner"]
+startdate: 2022-01-28
+instructor: ["Tony Hallam"]
 helper: 
 email: ["support@archer2.ac.uk"]
-collaborative_notes: https://pad.archer2.ac.uk/p/210602-hpc-carpentry
+collaborative_notes:
 ---
 
 {% include gh_variables.html %}
@@ -33,7 +33,7 @@ By the end of this workshop, students will know how to:
   software through environment modules.
 
 This lesson is part of a 2-day ARCHER2 course, you can find the material 
-for day 1 at [Introduction to the UNIX shell for High Performance Computing](https://epcced.github.io/2021-06-02-hpc-shell-online/).
+for day 1 at [Introduction to the UNIX shell for High Performance Computing](https://epcced.github.io/2022-01-27-hpc-shell-online/).
 
 <h2 id="general">General Information</h2>
 

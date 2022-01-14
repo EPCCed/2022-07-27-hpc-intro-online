@@ -14,7 +14,7 @@ NOTE: This is *not* Carpentries boilerplate! Please read carefully.
 1. Follow the instructions found in The Carpentries' [example lesson](
    https://github.com/carpentries/lesson-example/) to create a repository for
    your lesson. Install Ruby, Make, and Jekyll following the instructions
-   [here](http://carpentries.github.io/lesson-example/setup.html).
+   [here](https://carpentries.github.io/lesson-example/setup.html).
 
 1. For easier portability, we use snippets of text and code to capture inputs
    and outputs that are host- or site-specific and cannot be scripted. These

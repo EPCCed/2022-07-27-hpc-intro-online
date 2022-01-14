@@ -29,23 +29,23 @@ local:
 remote:
   name: "ARCHER2"
   login: "login.archer2.ac.uk"
-  host: "uan01"
+  host: "ln03"
   node: "nid001053"
   location: "EPCC, The University of Edinburgh"
-  homedir: "/home/ta018/ta018/"
+  homedir: "/home/ta050/ta050/"
   user: "userid"
-  prompt: "userid@uan01:~>"
-  prompt-work: "userid@uan01:/work/ta028/ta028/userid>"
+  prompt: "userid@ln03:~>"
+  prompt-work: "userid@uan01:/work/ta050/ta050/userid>"
   module_python3: "cray-python"
   bash_shebang: "#!/bin/bash"
 
 sched:
   name: "Slurm"
-  reservation: "ta028_180"
-  budget: "ta028"
+  reservation: "ta050_180"
+  budget: "ta050"
   submit:
     name: "sbatch"
-    options: "--partition=standard --qos=standard --reservation=ta028_180"
+    options: "--partition=standard --qos=standard --reservation=ta050_180"
   queue:
     debug: ""
     testing: ""
