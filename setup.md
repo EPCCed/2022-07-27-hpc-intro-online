@@ -103,7 +103,7 @@ If none of the options above address your circumstances, try an online search
 for: `Unix shell [your operating system]`.
 
 This setup takes you through getting ready for the course by ensuring you have an SSH client installed
-and registering for an ARCHER2 account (you can also use an existing ARCHER2 acccount if you are already
+and registering for an ARCHER2 account (you can also use an existing ARCHER2 account if you are already
 a user).
 
 ## SSH client
@@ -131,7 +131,7 @@ Linux users do not need to install anything, you should be set! Use your termina
 
 ## Account on ARCHER2
 
-**Note:** If you alredy have an ARCHER2 account you can use that for this course. Please see
+**Note:** If you already have an ARCHER2 account you can use that for this course. Please see
 see the notes at the end of this page rather than requesting a new account. Of course, if 
 you prefer to sign up for another ARCHER2 account specifically for this course, you are 
 welcome to do this instead!
