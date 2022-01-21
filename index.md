@@ -116,12 +116,12 @@ for day 1 at [Introduction to the UNIX shell for High Performance Computing](htt
   for more information.
 </p>
 
-<h2>Collaborative Document</h2>
+<!-- <h2>Collaborative Document</h2>
 
 During the course, we will make use of a collaborative document known as an *Etherpad*. You
 can find the document at:
 
- - [Course Etherpad]({{page.collaborative_notes}})
+ - [Course Etherpad]({{page.collaborative_notes}}) -->
 
 
 <hr/>

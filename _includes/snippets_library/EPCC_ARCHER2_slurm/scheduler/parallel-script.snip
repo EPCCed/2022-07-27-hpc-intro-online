@@ -1,8 +1,8 @@
 ```
 #!/bin/bash
 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+#SBATCH --partition={{ site.sched.partition }}
+#SBATCH --qos={{ site.sched.qos }}
 #SBATCH --reservation={{ sched.reservation }}
 #SBATCH --time=00:05:00
 

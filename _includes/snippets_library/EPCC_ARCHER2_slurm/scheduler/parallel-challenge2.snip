@@ -14,8 +14,8 @@
 > > ```
 > > #!/bin/bash
 > > 
-> > #SBATCH --partition=standard
-> > #SBATCH --qos=standard
+> > #SBATCH --partition={{ site.sched.partition }}
+> > #SBATCH --qos={{ site.sched.qos }}
 > > #SBATCH --time=00:00:30
 > > 
 > > #SBATCH --nodes=2

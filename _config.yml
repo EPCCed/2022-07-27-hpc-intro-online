@@ -41,11 +41,13 @@ remote:
 
 sched:
   name: "Slurm"
-  reservation: "ta050_180"
-  budget: "ta050"
+  partition: "standard"
+  reservation: "shortqos"
+  qos: "short"
+  budget: "short"
   submit:
     name: "sbatch"
-    options: "--partition=standard --qos=standard --reservation=ta050_180"
+    options: "--partition=standard --qos=short --reservation=shortqos"
   queue:
     debug: ""
     testing: ""
