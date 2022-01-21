@@ -231,7 +231,7 @@ search).
 > > ```
 > > {{ site.remote.bash_shebang }}
 > > {{ site.sched.comment }} --partition=standard
-> > {{ site.sched.comment }} --qos=standard
+> > {{ site.sched.comment }} --qos={{ site.sched.qos }}
 > > {{ site.sched.comment }} --reservation={{ site.sched.reservation }}
 > >
 > > module load epcc-job-env

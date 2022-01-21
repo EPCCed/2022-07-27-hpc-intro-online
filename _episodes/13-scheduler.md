@@ -260,7 +260,7 @@ later episode of this lesson.
 > > {{ site.remote.bash_shebang }}
 > > {{ site.sched.comment }} {{ site.sched.flag.time }} 00:01:15
 > > {{ site.sched.comment }} --partition=standard
-> > {{ site.sched.comment }} --qos=standard
+> > {{ site.sched.comment }} --qos={{ site.sched.qos }}
 > > {{ site.sched.comment }} --reservation={{ site.sched.reservation }}
 > >
 > > echo -n "This script is running on "
@@ -294,8 +294,8 @@ walltime, and attempt to run a job for two minutes.
 {{ site.remote.bash_shebang }}
 {{ site.sched.comment }} {{ site.sched.flag.name }} long_job
 {{ site.sched.comment }} {{ site.sched.flag.time }} 00:00:30
-{{ site.sched.comment }} --partition=standard
-{{ site.sched.comment }} --qos=standard
+{{ site.sched.comment }} --partition={{ site.sched.partition }}
+{{ site.sched.comment }} --qos={{ site.sched.qos }}
 {{ site.sched.comment }} --reservation={{ site.sched.reservation }}
 
 echo "This script is running on ... "
