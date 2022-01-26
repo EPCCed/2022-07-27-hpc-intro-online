@@ -19,12 +19,12 @@
 > > #SBATCH --nodes=1
 > > #SBATCH --ntasks-per-node=128
 > > 
-> > module load epcc-job-env
-> > module load training/sharpen/1.0
-> > 
-> > cp $SHARPEN_INPUT/fuzzy.pgm .
-> > 
-> > srun --hint=nomultithread --distribution=block:block sharpen-mpi.x
+> > export PATH=/work/ta050/ta050/shared/bin:$PATH
+> > export FUZZY_INPUT=/work/ta050/ta050/shared/fuzzy.pgm
+> >
+> > cp $FUZZY_INPUT .
+> >
+> > srun --hint=nomultithread --distribution=block:block sharpen-mpi
 > > ```
 > {: .solution}
 {: .challenge}

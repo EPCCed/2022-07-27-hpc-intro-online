@@ -192,14 +192,14 @@ existing account code (the cost of the jobs is negligible as they are very short
 the ARCHER2 `short` QoS . When the course talks about setting the following options:
 
 ```
---qos=standard --reservation={{ site.sched.reservation }}
+--qos={{ site.sched.qos }} --reservation={{ site.sched.reservation }}
 ```
 {: .language-bash}
 
 you should replace them with:
 
 ```
---qos=short --reservation=shortqos
+--qos=short --reservation={{ site.sched.qos }}
 ```
 {: .language-bash}
 

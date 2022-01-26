@@ -9,8 +9,12 @@
 > > #SBATCH --tasks-per-node=1
 > > #SBATCH --time=00:15:00
 > > 
-> > module load -s epcc-job-env
-> > module load training/sharpen/1.0
+> > export PATH=/work/ta050/ta050/shared/bin:$PATH
+> > export FUZZY_INPUT=/work/ta050/ta050/shared/fuzzy.pgm
 > >
+> > cp $FUZZY_INPUT .
+> >
+> > srun --hint=nomultithread --distribution=block:block sharpen-mpi
+> > ```
 > > # Run application using a single process (i.e. in serial)
 > > srun --hint=nomultithread --distribution=block:block sharpen-mpi.x

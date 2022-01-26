@@ -3,16 +3,16 @@
 
 #SBATCH --partition={{ site.sched.partition }}
 #SBATCH --qos={{ site.sched.qos }}
-#SBATCH --reservation={{ sched.reservation }}
+#SBATCH --reservation={{ site.sched.reservation }}
 #SBATCH --time=00:05:00
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 
-module load epcc-job-env
-module load training/sharpen/1.0
+export PATH=/work/ta050/ta050/shared/bin:$PATH
+export FUZZY_INPUT=/work/ta050/ta050/shared/fuzzy.pgm
 
-cp $SHARPEN_INPUT/fuzzy.pgm .
+cp $FUZZY_INPUT .
 
-srun --hint=nomultithread --distribution=block:block sharpen-mpi.x
+srun --hint=nomultithread --distribution=block:block sharpen-mpi
 ```
