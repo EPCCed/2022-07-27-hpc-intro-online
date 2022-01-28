@@ -47,7 +47,7 @@ sched:
   budget: "short"
   submit:
     name: "sbatch"
-    options: "--partition=standard --qos=short --reservation=shortqos"
+    options: "--partition=standard --qos=short"
   queue:
     debug: ""
     testing: ""
