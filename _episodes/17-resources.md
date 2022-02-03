@@ -71,17 +71,7 @@ job for our baseline performance so that is where we will start
 > 
 > > ## Solution
 > > 
-> > Creating a file called `submit_sharpen.pbs`:
-> > ```
 {% include {{ site.snippets }}/resources/serial-submit.snip %}
-> > ```
-> > {: .language-bash}
-> > 
-> > Submit with:
-> > ```
-> > {{ site.remote.prompt-work }} {{ site.sched.submit.name }}  submit_sharpen.pbs
-> > ```
-> > {: .language-bash}
 > >
 > > Output in the job log should look something like:
 > >
@@ -100,6 +90,7 @@ job for our baseline performance so that is where we will start
 > > Overall run time was 5.496556 seconds
 > > ```
 > > {: .language-bash}
+> >
 > {: .solution}
 {: .challenge}
 

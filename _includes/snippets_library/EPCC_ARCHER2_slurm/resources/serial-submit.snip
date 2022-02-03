@@ -1,3 +1,6 @@
+> > Creating a file called `submit_sharpen.slurm`:
+> > 
+> > ```
 > > #!/bin/bash
 > >
 > > #SBATCH --partition={{ site.sched.partition }}
@@ -16,5 +19,17 @@
 > >
 > > srun --hint=nomultithread --distribution=block:block sharpen-mpi
 > > ```
-> > # Run application using a single process (i.e. in serial)
-> > srun --hint=nomultithread --distribution=block:block sharpen-mpi.x
+> > {: .language-bash}
+> > 
+> > Run application using a single process (i.e. in serial) with a blocking `srun` command:
+> > ```
+> > srun --hint=nomultithread --distribution=block:block sharpen-mpi
+> > ```
+> > {: .language-bash}
+> > 
+> > Submit with to the batch queue with:
+> > 
+> > ```
+> > {{ site.remote.prompt-work }} {{ site.sched.submit.name }}  submit_sharpen.slurm
+> > ```
+> > {: .language-bash}
