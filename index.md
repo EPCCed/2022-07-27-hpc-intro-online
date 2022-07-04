@@ -7,9 +7,9 @@ address:
 country: "UK"
 language: "English"
 latlng: 
-humandate: 28 January 2022
+humandate: 27 July 2022
 humantime: 09:30-16:00 BST
-startdate: 2022-01-28
+startdate: 2022-07-27
 instructor: ["Tony Hallam"]
 helper: 
 email: ["support@archer2.ac.uk"]
