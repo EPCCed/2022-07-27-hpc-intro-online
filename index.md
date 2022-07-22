@@ -33,7 +33,7 @@ By the end of this workshop, students will know how to:
   software through environment modules.
 
 This lesson is part of a 2-day ARCHER2 course, you can find the material 
-for day 1 at [Introduction to the UNIX shell for High Performance Computing](https://epcced.github.io/2022-01-27-hpc-shell-online/).
+for day 1 at [Introduction to the UNIX shell for High Performance Computing](https://epcced.github.io/2022-07-26-hpc-shell-online/).
 
 <h2 id="general">General Information</h2>
 
